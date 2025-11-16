@@ -17,7 +17,7 @@
         "@types/node": "22.10.2",
         "express": "5.1.0",
         "jose": "6.0.12",
-        "js-yaml": "4.1.0",
+        "js-yaml": "4.1.1",
         "lodash.ismatch": "4.4.0",
         "lodash.ismatchwith": "4.4.0",
         "openapi-response-validator": "12.1.3",
