@@ -6,6 +6,9 @@
     "author": "Frode Aannevik <frode@dintero.com>",
     "license": "MIT",
     "private": true,
+    "resolutions": {
+        "@aws-sdk/**/fast-xml-parser": ">=5.3.6"
+    },
     "devDependencies": {
         "@aws-sdk/client-lambda": "3.858.0",
         "@aws-sdk/client-s3": "3.858.0",
