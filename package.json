@@ -7,7 +7,7 @@
     "license": "MIT",
     "private": true,
     "resolutions": {
-        "@aws-sdk/**/fast-xml-parser": ">=5.3.6"
+        "@aws-sdk/**/fast-xml-parser": ">=5.4.0"
     },
     "devDependencies": {
         "@aws-sdk/client-lambda": "3.858.0",
