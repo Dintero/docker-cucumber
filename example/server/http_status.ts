@@ -1,5 +1,7 @@
 import * as http from "node:http";
 
+const port = parseInt(process.env.PORT ?? "8080", 10);
+
 const server = http.createServer((req, res) => {
     const url = new URL(req.url || "", `http://${req.headers.host}`);
     const path = url.pathname;
@@ -8,8 +10,8 @@ const server = http.createServer((req, res) => {
     res.end(`HTTP Status Code: ${statusCode}\n`);
 });
 
-server.listen(parseInt(process.env.PORT ?? "8080"), () => {
-    console.log("Server is listening on port 8080");
+server.listen(port, () => {
+    console.log(`Server is listening on port ${port}`);
 });
 
 const shutdown = () => {
