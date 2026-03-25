@@ -1,9 +1,9 @@
-FROM node:22.12.0-alpine3.20
+ARG DOCKER_REGISTRY=registry-1.docker.io
+FROM ${DOCKER_REGISTRY}/library/node:24.14.0-alpine3.22
 WORKDIR /usr/src
 COPY *.json yarn.lock ./
 RUN --mount=type=cache,target=/root/yarn/.cache/yarn \
-    yarn install --frozen-lockfile ;
+    yarn --silent install --frozen-lockfile --ignore-scripts
 
 WORKDIR /usr/src/app
-ENV PATH="/usr/src/node_modules/.bin:$PATH"
-ENTRYPOINT ["cucumber-js", "--require-module", "ts-node/register"]
+ENTRYPOINT ["node", "--import", "tsx", "/usr/src/node_modules/.bin/cucumber-js"]
