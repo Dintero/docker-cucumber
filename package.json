@@ -20,7 +20,7 @@
         "@types/lodash.ismatchwith": "4.4.9",
         "@types/node": "22.10.2",
         "express": "5.2.0",
-        "jose": "6.0.12",
+        "jose": "6.2.2",
         "js-yaml": "4.1.1",
         "lodash.ismatch": "4.4.0",
         "lodash.ismatchwith": "4.4.0",
