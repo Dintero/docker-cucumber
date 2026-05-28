@@ -14,7 +14,7 @@
         "@aws-sdk/client-lambda": "3.1048.0",
         "@aws-sdk/client-s3": "3.1048.0",
         "@aws-sdk/client-ssm": "3.1048.0",
-        "@cucumber/cucumber": "12.8.2",
+        "@cucumber/cucumber": "12.9.0",
         "@types/js-yaml": "4.0.9",
         "@types/lodash.ismatch": "4.4.9",
         "@types/lodash.ismatchwith": "4.4.9",
