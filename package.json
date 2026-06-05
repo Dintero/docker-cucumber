@@ -28,6 +28,6 @@
         "pg-promise": "12.6.2",
         "tsx": "4.22.3",
         "typescript": "6.0.3",
-        "z-schema": "6.0.2"
+        "z-schema": "11.0.1"
     }
 }
