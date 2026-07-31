@@ -1324,15 +1324,15 @@ path-to-regexp@^8.0.0:
   resolved "https://registry.yarnpkg.com/path-to-regexp/-/path-to-regexp-8.4.2.tgz#795c420c4f7ca45c5b887366f622ee0c9852cccd"
   integrity sha512-qRcuIdP69NPm4qbACK+aDogI5CBDMi1jKe0ry5rSQJz8JVLsC7jV8XpiJjGRLLol3N+R5ihGYcrPLTno6pAdBA==
 
-pg-cloudflare@^1.3.0:
+pg-cloudflare@^1.4.0:
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/pg-cloudflare/-/pg-cloudflare-1.4.0.tgz#4b4c20e6d8ae531d400730f4804571a8d62f1497"
   integrity sha512-Vo7z/6rrQYxpNRylp4Tlob2elzbh+N/MOQbxFVWCxS7oEx6jF53GTJFxK2WWpKuBRkmiin4Mt+xofFDjx09R0A==
 
-pg-connection-string@^2.12.0:
-  version "2.13.0"
-  resolved "https://registry.yarnpkg.com/pg-connection-string/-/pg-connection-string-2.13.0.tgz#8678113465a5af3cc977dcb51eadc847b27aa2de"
-  integrity sha512-EMnU9E2fSULdsbErBbMaXJvFeD9B4+nPcM3f+4lsiCR0BHLPrLVjv3DbyM2hgQQviKJaTWIRRTjKjWlHg3p2ig==
+pg-connection-string@^2.14.0:
+  version "2.14.0"
+  resolved "https://registry.yarnpkg.com/pg-connection-string/-/pg-connection-string-2.14.0.tgz#abc26ee4f37c56c0f3ae0fcf0b0653cc4e1c0fd9"
+  integrity sha512-XwWDGcLRGCXAR8F/AM5bG7Q+A3Wm2s6QeEjlOKZLlH3UYcguiqCWKyWXVag5TLTIjR7oOJUY8kcADaZgWPyLeg==
 
 pg-int8@1.0.1:
   version "1.0.1"
@@ -1344,25 +1344,25 @@ pg-minify@1.8.0:
   resolved "https://registry.yarnpkg.com/pg-minify/-/pg-minify-1.8.0.tgz#c736f762fb987ab21e784554b7724f05397708d1"
   integrity sha512-jO/oJOununpx8DzKgvSsWm61P8JjwXlaxSlbbfTBo1nvSWoo/+I6qZYaSN96jm/KDwa5d+JMQwPGgcP6HXDRow==
 
-pg-pool@^3.13.0:
+pg-pool@^3.14.0:
   version "3.14.0"
   resolved "https://registry.yarnpkg.com/pg-pool/-/pg-pool-3.14.0.tgz#f35ae4eb846780cad71af24099b3edfa9781ad90"
   integrity sha512-gKtPkFdQPU3DksooVLi9LsjZxrsBUZIpa+7aVx+LV5pNh0KzP4Zleud2po+ConrxbuXGBJ6Hfer6hdgpIBpBaw==
 
-pg-promise@12.6.2:
-  version "12.6.2"
-  resolved "https://registry.yarnpkg.com/pg-promise/-/pg-promise-12.6.2.tgz#8d37eb1c23dc9ea62efb109816c9cc0d43cd74d9"
-  integrity sha512-pRlBExJKLomYri4YslxN15n3lL3QNFOsWIjY962CwkNq1ATJEfMbij0MI90ZHz2aHdkWLGCDxKg4l1AFiI8dXQ==
+pg-promise@12.7.0:
+  version "12.7.0"
+  resolved "https://registry.yarnpkg.com/pg-promise/-/pg-promise-12.7.0.tgz#160e88971c63efdaf72327774f624977e6f2e6ba"
+  integrity sha512-DeE3zTm2ZX7X8nuGxE7BUvA8C0Qw5r4tzCnwWcjn/pMfLXTFxHoYcrr7qx/VGfldehwVrj7q/aI4jpxLE0Gqaw==
   dependencies:
     assert-options "0.8.3"
-    pg "8.20.0"
+    pg "8.22.0"
     pg-minify "1.8.0"
     spex "4.1.0"
 
-pg-protocol@^1.13.0:
-  version "1.14.0"
-  resolved "https://registry.yarnpkg.com/pg-protocol/-/pg-protocol-1.14.0.tgz#c1f045b74274b007078c687147141f785f59b8de"
-  integrity sha512-n5taZ1kO3s9ngDTVxsEznOqCyToTgz0FLuPq0B33COy5pPpuWJpY3/2oRBVETuOgzdqRXfWpM9HIhp2LBBT1BA==
+pg-protocol@^1.15.0:
+  version "1.15.0"
+  resolved "https://registry.yarnpkg.com/pg-protocol/-/pg-protocol-1.15.0.tgz#758f6c0679cc0bbf4938603b7597703f333180c0"
+  integrity sha512-cq9sECI5s0+uPUXjbz8ioyPJni6RzsRib0US67i5IoTZKw8fNeYlVE7u8F4dG7vEJJtc5wdD1K189lCCUwqWTQ==
 
 pg-types@2.2.0:
   version "2.2.0"
@@ -1375,18 +1375,18 @@ pg-types@2.2.0:
     postgres-date "~1.0.4"
     postgres-interval "^1.1.0"
 
-pg@8.20.0:
-  version "8.20.0"
-  resolved "https://registry.yarnpkg.com/pg/-/pg-8.20.0.tgz#1a274de944cb329fd6dd77a6d371a005ba6b136d"
-  integrity sha512-ldhMxz2r8fl/6QkXnBD3CR9/xg694oT6DZQ2s6c/RI28OjtSOpxnPrUCGOBJ46RCUxcWdx3p6kw/xnDHjKvaRA==
+pg@8.22.0:
+  version "8.22.0"
+  resolved "https://registry.yarnpkg.com/pg/-/pg-8.22.0.tgz#55ca3975026180c6dced6eec3a20a844c2dc9237"
+  integrity sha512-8wih1vVIBMxoUM2oB4soJsD9tDnDpLv4OXBJ+EJzFsvycD+lfyIreC2gGHq78f8jbLLt+bvlPTFdFZfJkOuzAA==
   dependencies:
-    pg-connection-string "^2.12.0"
-    pg-pool "^3.13.0"
-    pg-protocol "^1.13.0"
+    pg-connection-string "^2.14.0"
+    pg-pool "^3.14.0"
+    pg-protocol "^1.15.0"
     pg-types "2.2.0"
     pgpass "1.0.5"
   optionalDependencies:
-    pg-cloudflare "^1.3.0"
+    pg-cloudflare "^1.4.0"
 
 pgpass@1.0.5:
   version "1.0.5"
