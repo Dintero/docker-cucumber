@@ -14,7 +14,7 @@ jobs:
         with:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_TOKEN }}
-      - run: make publis
+      - run: make publish
         env:
           REPOSITORY: docker.io/${{ secrets.DOCKER_HUB_USERNAME }}/${{ secrets.DOCKER_HUB_REPOSITORY }}
           BUILDX_CACHE_ARGS: --cache-from type=gha --cache-to type=gha,mode=max
