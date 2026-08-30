@@ -8,7 +8,7 @@ services:
     command: example/server/http_status.ts
 
   end-to-end-tests:
-    image: ${DOCKER_REGISTRY:-registry-1.docker.io}/dintero/docker-cucumber
+    image: dintero/docker-cucumber
     volumes: [.:/usr/src/app/]
     depends_on: [httpstatus]
     command: --require ./test_features.ts features
