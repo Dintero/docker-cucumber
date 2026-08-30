@@ -1327,17 +1327,17 @@ pg-pool@^3.14.0:
   resolved "https://registry.yarnpkg.com/pg-pool/-/pg-pool-3.14.0.tgz#f35ae4eb846780cad71af24099b3edfa9781ad90"
   integrity sha512-gKtPkFdQPU3DksooVLi9LsjZxrsBUZIpa+7aVx+LV5pNh0KzP4Zleud2po+ConrxbuXGBJ6Hfer6hdgpIBpBaw==
 
-pg-promise@12.7.0:
-  version "12.7.0"
-  resolved "https://registry.yarnpkg.com/pg-promise/-/pg-promise-12.7.0.tgz#160e88971c63efdaf72327774f624977e6f2e6ba"
-  integrity sha512-DeE3zTm2ZX7X8nuGxE7BUvA8C0Qw5r4tzCnwWcjn/pMfLXTFxHoYcrr7qx/VGfldehwVrj7q/aI4jpxLE0Gqaw==
+pg-promise@12.7.1:
+  version "12.7.1"
+  resolved "https://registry.yarnpkg.com/pg-promise/-/pg-promise-12.7.1.tgz#9b62c41b39024e1014c58ef83a6f9554a60ee589"
+  integrity sha512-tsemfuBRsHMGaFZKMpkmCAA9iLeHXuuTq+0DucJwJyftyXk7crlMFXq7SY0AOVelIrdSL8qwdl5omfj/R8JN6A==
   dependencies:
     assert-options "0.8.3"
-    pg "8.22.0"
+    pg "8.23.0"
     pg-minify "1.8.0"
     spex "4.1.0"
 
-pg-protocol@^1.15.0:
+pg-protocol@^1.16.0:
   version "1.16.0"
   resolved "https://registry.yarnpkg.com/pg-protocol/-/pg-protocol-1.16.0.tgz#cffb008826561ee9770a8a15dc21f269d731b305"
   integrity sha512-sILXutLVjCLjcDuOmvhX5e2Z4cS5qG/6Bu3VkpFwdf/633ElGLpEh9bgmuI5I4sqKqkifQiGyiCcx1HdtrK7tg==
@@ -1353,14 +1353,14 @@ pg-types@2.2.0:
     postgres-date "~1.0.4"
     postgres-interval "^1.1.0"
 
-pg@8.22.0:
-  version "8.22.0"
-  resolved "https://registry.yarnpkg.com/pg/-/pg-8.22.0.tgz#55ca3975026180c6dced6eec3a20a844c2dc9237"
-  integrity sha512-8wih1vVIBMxoUM2oB4soJsD9tDnDpLv4OXBJ+EJzFsvycD+lfyIreC2gGHq78f8jbLLt+bvlPTFdFZfJkOuzAA==
+pg@8.23.0:
+  version "8.23.0"
+  resolved "https://registry.yarnpkg.com/pg/-/pg-8.23.0.tgz#5c2026d32bd0cb4fbd9196bac1ecf5ae66607180"
+  integrity sha512-Ip2EQCngowJLGOfCwkFhPXU7/ljlhn6Rxlmy4XYfL2Y+vyRM59+8uR2xqRWKdYmbXmxCFOAmKxBuSUCdF34qLg==
   dependencies:
     pg-connection-string "^2.14.0"
     pg-pool "^3.14.0"
-    pg-protocol "^1.15.0"
+    pg-protocol "^1.16.0"
     pg-types "2.2.0"
     pgpass "1.0.5"
   optionalDependencies:
