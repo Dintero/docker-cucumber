@@ -85,7 +85,9 @@ export function enabled(): boolean {
 }
 
 function headerPairs(headers: HeadersInit | undefined): HarHeader[] {
-    if (!headers) return [];
+    if (!headers) {
+        return [];
+    }
     if (headers instanceof Headers) {
         return [...headers.entries()].map(([name, value]) => ({ name, value }));
     }
@@ -114,7 +116,9 @@ function queryPairs(url: string): HarHeader[] {
 }
 
 function mimeType(headers: Headers | HeadersInit | undefined): string {
-    if (!headers) return "";
+    if (!headers) {
+        return "";
+    }
     if (headers instanceof Headers) {
         return headers.get("content-type") || "";
     }
@@ -181,7 +185,7 @@ async function captureEntry(
             ? Buffer.byteLength(reqBody, "utf-8")
             : reqBody
               ? -1
-              : -1;
+              : 0;
 
     const entry: HarEntry = {
         startedDateTime: startedAt.toISOString(),
