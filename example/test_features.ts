@@ -34,6 +34,6 @@ When("I request {string}", async function (method: string) {
     this.ctx.response = await fetch(this.ctx.url, { method });
 });
 
-Then("response status should be {string}", async function (status: string) {
+Then("response status should be {string}", function (status: string) {
     assert.equal(this.ctx.response?.status, StatusNameToCode[status]);
 });

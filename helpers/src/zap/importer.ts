@@ -48,7 +48,10 @@ export async function importFindings(
     if (account === null) {
         const sts = new STSClient({ region });
         const id = await sts.send(new GetCallerIdentityCommand({}));
-        account = id.Account!;
+        if (!id.Account) {
+            throw new Error("STS get-caller-identity returned no Account");
+        }
+        account = id.Account;
     }
 
     let arn = productArn;

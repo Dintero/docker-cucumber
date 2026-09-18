@@ -6,6 +6,11 @@
     "author": "Frode Aannevik <frode@dintero.com>",
     "license": "MIT",
     "private": true,
+    "scripts": {
+        "lint": "biome check",
+        "format": "biome format --write",
+        "test": "node --import tsx --test helpers/src/**/*.test.ts"
+    },
     "devDependencies": {
         "@aws-sdk/client-lambda": "3.1119.0",
         "@aws-sdk/client-s3": "3.1119.0",
@@ -13,6 +18,7 @@
         "@aws-sdk/client-sqs": "3.1119.0",
         "@aws-sdk/client-ssm": "3.1119.0",
         "@aws-sdk/client-sts": "3.1119.0",
+        "@biomejs/biome": "2.5.11",
         "@cucumber/cucumber": "13.2.1",
         "@types/js-yaml": "4.0.9",
         "@types/lodash.ismatch": "4.4.9",

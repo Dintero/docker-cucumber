@@ -37,34 +37,82 @@ const ASFF_CONFIDENCE: Record<string, number> = {
 // us in CodeBuild) fails locally in the parser rather than at import time.
 // Extend when the parser starts emitting new fields.
 const ASFF_TOP_LEVEL = new Set([
-    "SchemaVersion", "Id", "ProductArn", "GeneratorId", "AwsAccountId",
-    "CreatedAt", "UpdatedAt", "Severity", "Title", "Description",
-    "Resources", "Types",
-    "Confidence", "Criticality", "SourceUrl", "Remediation",
-    "Vulnerabilities", "Compliance", "ProductFields", "UserDefinedFields",
-    "Note", "Workflow", "RelatedFindings",
-    "FirstObservedAt", "LastObservedAt", "VerificationState", "Sample",
-    "GeneratorDetails", "FindingProviderFields",
-    "Action", "Malware", "Network", "Process", "ThreatIntelIndicators",
+    "SchemaVersion",
+    "Id",
+    "ProductArn",
+    "GeneratorId",
+    "AwsAccountId",
+    "CreatedAt",
+    "UpdatedAt",
+    "Severity",
+    "Title",
+    "Description",
+    "Resources",
+    "Types",
+    "Confidence",
+    "Criticality",
+    "SourceUrl",
+    "Remediation",
+    "Vulnerabilities",
+    "Compliance",
+    "ProductFields",
+    "UserDefinedFields",
+    "Note",
+    "Workflow",
+    "RelatedFindings",
+    "FirstObservedAt",
+    "LastObservedAt",
+    "VerificationState",
+    "Sample",
+    "GeneratorDetails",
+    "FindingProviderFields",
+    "Action",
+    "Malware",
+    "Network",
+    "Process",
+    "ThreatIntelIndicators",
 ]);
 const ASFF_SEVERITY = new Set(["Label", "Normalized", "Original", "Product"]);
 const ASFF_SEVERITY_LABELS = new Set<SeverityLabel>([
-    "INFORMATIONAL", "LOW", "MEDIUM", "HIGH", "CRITICAL",
+    "INFORMATIONAL",
+    "LOW",
+    "MEDIUM",
+    "HIGH",
+    "CRITICAL",
 ]);
 const ASFF_REMEDIATION = new Set(["Recommendation"]);
 const ASFF_RECOMMENDATION = new Set(["Text", "Url"]);
 const ASFF_COMPLIANCE = new Set([
-    "Status", "StatusReasons", "RelatedRequirements",
-    "SecurityControlId", "AssociatedStandards",
+    "Status",
+    "StatusReasons",
+    "RelatedRequirements",
+    "SecurityControlId",
+    "AssociatedStandards",
 ]);
 const ASFF_VULN = new Set([
-    "Id", "VulnerablePackages", "Cvss", "RelatedVulnerabilities",
-    "Vendor", "ReferenceUrls", "FixAvailable", "EpssScore",
-    "ExploitAvailable", "LastKnownExploitAt", "CodeVulnerabilities",
+    "Id",
+    "VulnerablePackages",
+    "Cvss",
+    "RelatedVulnerabilities",
+    "Vendor",
+    "ReferenceUrls",
+    "FixAvailable",
+    "EpssScore",
+    "ExploitAvailable",
+    "LastKnownExploitAt",
+    "CodeVulnerabilities",
 ]);
 const ASFF_RESOURCE = new Set([
-    "Type", "Id", "Partition", "Region", "ResourceRole", "Tags",
-    "DataClassification", "Details", "ApplicationName", "ApplicationArn",
+    "Type",
+    "Id",
+    "Partition",
+    "Region",
+    "ResourceRole",
+    "Tags",
+    "DataClassification",
+    "Details",
+    "ApplicationName",
+    "ApplicationArn",
 ]);
 
 const CONFIDENCE: Record<string, number> = {
@@ -95,7 +143,10 @@ export function validateFinding(f: Record<string, unknown>): void {
     checkKeys(f, ASFF_TOP_LEVEL, "top-level");
     const sev = (f.Severity as Record<string, unknown>) || {};
     checkKeys(sev, ASFF_SEVERITY, "Severity");
-    if ("Label" in sev && !ASFF_SEVERITY_LABELS.has(sev.Label as SeverityLabel)) {
+    if (
+        "Label" in sev &&
+        !ASFF_SEVERITY_LABELS.has(sev.Label as SeverityLabel)
+    ) {
         throw new Error(
             `ASFF validation: Severity.Label=${JSON.stringify(sev.Label)} must be one of` +
                 ` ${JSON.stringify([...ASFF_SEVERITY_LABELS].sort())}`,
@@ -116,9 +167,13 @@ export function validateFinding(f: Record<string, unknown>): void {
         checkKeys(f.Compliance as object, ASFF_COMPLIANCE, "Compliance");
     }
     const vulns = (f.Vulnerabilities as object[]) || [];
-    vulns.forEach((v, i) => checkKeys(v, ASFF_VULN, `Vulnerabilities[${i}]`));
+    vulns.forEach((v, i) => {
+        checkKeys(v, ASFF_VULN, `Vulnerabilities[${i}]`);
+    });
     const resources = (f.Resources as object[]) || [];
-    resources.forEach((r, i) => checkKeys(r, ASFF_RESOURCE, `Resources[${i}]`));
+    resources.forEach((r, i) => {
+        checkKeys(r, ASFF_RESOURCE, `Resources[${i}]`);
+    });
 }
 
 export interface Matcher {
@@ -171,13 +226,16 @@ export function compileMatchers(base: string, templates: string[]): Matcher[] {
         let pattern = escapeRegex(full);
         // {name} placeholders (already regex-escaped as \{name\}) → [^/]+
         pattern = pattern.replace(/\\\{[^}]+\\\}/g, "[^/]+");
-        return { regex: new RegExp("^" + pattern + "$"), template: full };
+        return { regex: new RegExp(`^${pattern}$`), template: full };
     });
     compiled.sort((a, b) => b.template.length - a.template.length);
     return compiled;
 }
 
-export function templatePath(url: string, matchers: Matcher[]): [string, string] {
+export function templatePath(
+    url: string,
+    matchers: Matcher[],
+): [string, string] {
     let host = "";
     let path = "/";
     try {
@@ -260,7 +318,10 @@ export function toFinding(
         const v = ((alert[k] as string) || "").trim();
         if (v) descParts.push(v);
     }
-    const description = (descParts.join("\n\n") || "ZAP finding").slice(0, 1024);
+    const description = (descParts.join("\n\n") || "ZAP finding").slice(
+        0,
+        1024,
+    );
 
     // GeneratorId encodes the repo so SH's console (which doesn't expose
     // ProductFields as a searchable field) can filter on prefix "zap-<repo>-"
@@ -303,7 +364,9 @@ export function toFinding(
         Types: [
             "Software and Configuration Checks/Vulnerabilities",
             ...(cwe
-                ? [`Software and Configuration Checks/Vulnerabilities/CWE-${cwe}`]
+                ? [
+                      `Software and Configuration Checks/Vulnerabilities/CWE-${cwe}`,
+                  ]
                 : []),
         ],
     };
@@ -335,7 +398,7 @@ export function toFinding(
                 let trimmed = solution.slice(0, 511);
                 const cut = trimmed.lastIndexOf(" ");
                 if (cut > 400) trimmed = trimmed.slice(0, cut);
-                rec.Text = trimmed.replace(/[,.;]+$/, "") + "…";
+                rec.Text = `${trimmed.replace(/[,.;]+$/, "")}…`;
             } else {
                 rec.Text = solution;
             }
@@ -400,9 +463,7 @@ export function buildFindings(
         branch?: string;
     } = {},
 ): BuildFindingsResult {
-    const ts =
-        now ||
-        new Date().toISOString().replace(/\.\d+Z$/, ".000Z");
+    const ts = now || new Date().toISOString().replace(/\.\d+Z$/, ".000Z");
     const threshold = CONFIDENCE[minConfidence];
 
     const [base, templates] = loadSpecPaths(specPath);
@@ -430,5 +491,9 @@ export function buildFindings(
         if (!findings.has(id)) findings.set(id, f);
     }
 
-    return { findings: [...findings.values()], alertsCount: alerts.length, dropped };
+    return {
+        findings: [...findings.values()],
+        alertsCount: alerts.length,
+        dropped,
+    };
 }

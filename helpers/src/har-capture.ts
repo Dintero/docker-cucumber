@@ -166,7 +166,9 @@ async function captureEntry(
     let encoding: string | undefined;
     if (isTextish(respMime)) {
         try {
-            bodyText = new TextDecoder("utf-8", { fatal: true }).decode(bodyBytes);
+            bodyText = new TextDecoder("utf-8", { fatal: true }).decode(
+                bodyBytes,
+            );
         } catch {
             bodyText = Buffer.from(bodyBytes).toString("base64");
             encoding = "base64";

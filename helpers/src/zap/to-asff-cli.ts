@@ -109,7 +109,7 @@ function parseArgs(argv: string[]): Args {
     return defaults;
 }
 
-export async function main(argv: string[] = process.argv.slice(2)): Promise<void> {
+export function main(argv: string[] = process.argv.slice(2)): void {
     const args = parseArgs(argv);
     const { findings, alertsCount, dropped } = buildFindings(
         args.input,
@@ -127,12 +127,16 @@ export async function main(argv: string[] = process.argv.slice(2)): Promise<void
         `[zap-to-asff] ${alertsCount} alerts → ${findings.length} unique findings` +
             ` (dropped ${dropped} below min-confidence=${args.minConfidence})`,
     );
-    process.stdout.write(JSON.stringify({ Findings: findings }, null, 2) + "\n");
+    process.stdout.write(
+        `${JSON.stringify({ Findings: findings }, null, 2)}\n`,
+    );
 }
 
 if (import.meta.url === `file://${process.argv[1]}`) {
-    main().catch((e) => {
+    try {
+        main();
+    } catch (e) {
         console.error(e instanceof Error ? e.stack || e.message : e);
         process.exit(1);
-    });
+    }
 }
