@@ -10,6 +10,7 @@
 import type { MinConfidence } from "./asff.ts";
 import * as client from "./client.ts";
 import { importFindings } from "./importer.ts";
+import { type MinRisk, writeJunit } from "./junit.ts";
 
 interface Flag {
     name: string;
@@ -248,6 +249,56 @@ const SUBCOMMANDS: Subcommand[] = [
                 minConfidence: v["--min-confidence"] as MinConfidence,
                 outPath: v["--out"] ?? null,
             });
+        },
+    },
+    {
+        name: "to-junit",
+        help:
+            "Convert zap-alerts.json to JUnit XML for CodeBuild's report view." +
+            " One testcase per (plugin, templated_path, method, param) tuple" +
+            " at risk ≥ --min-risk; complementary to `import` (which uploads to" +
+            " Security Hub).",
+        flags: [
+            {
+                name: "--alerts",
+                hasValue: true,
+                required: true,
+                help: "Path to a zap-alerts.json file.",
+            },
+            {
+                name: "--out",
+                hasValue: true,
+                required: true,
+                help: "Output path for the JUnit XML file.",
+            },
+            {
+                name: "--spec",
+                hasValue: true,
+                help: "OpenAPI/Swagger spec used to template URL paths.",
+            },
+            {
+                name: "--min-risk",
+                hasValue: true,
+                default: "Medium",
+                choices: ["Low", "Medium", "High"],
+                help: "Minimum risk to include (default: Medium).",
+            },
+            {
+                name: "--suite",
+                hasValue: true,
+                default: "zap-dast",
+                help: "testsuite name (default: zap-dast).",
+            },
+        ],
+        run: (v) => {
+            const count = writeJunit(v["--alerts"], v["--out"], {
+                minRisk: v["--min-risk"] as MinRisk,
+                specPath: v["--spec"] ?? null,
+                suiteName: v["--suite"],
+            });
+            console.log(
+                `[zap-junit] wrote ${count} testcase(s) to ${v["--out"]}`,
+            );
         },
     },
 ];
