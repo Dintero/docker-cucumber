@@ -162,6 +162,25 @@ describe("alertsToJunit", () => {
         assert.ok(!xml.includes("\x00"));
     });
 
+    test("strips ASCII control chars from attribute values", () => {
+        const alerts = [
+            {
+                url: "http://x/y",
+                pluginId: "1",
+                method: "GET",
+                risk: "High",
+                confidence: "High",
+                alert: "attr\x00chars\x1Fhere",
+                param: "p\x07q",
+            },
+        ];
+        const { xml } = alertsToJunit(alerts, { minRisk: "Medium" });
+        // biome-ignore lint/suspicious/noControlCharactersInRegex: intentional
+        assert.ok(!/[\x00-\x08\x0B\x0C\x0E-\x1F]/.test(xml));
+        assert.ok(xml.includes("attrcharshere"));
+        assert.ok(xml.includes("[pq]"));
+    });
+
     test("splits ]]> inside body so CDATA stays well-formed", () => {
         const alerts = [
             {
@@ -213,5 +232,13 @@ describe("writeJunit", () => {
         const written = readFileSync(outPath, "utf-8");
         assert.ok(written.startsWith("<?xml"));
         assert.ok(written.includes(`tests="3"`));
+    });
+
+    test("accepts a bare alerts array (same shape as buildFindings)", () => {
+        const alertsPath = join(tmpDir, "alerts-bare.json");
+        const outPath = join(tmpDir, "zap-junit-bare.xml");
+        writeFileSync(alertsPath, JSON.stringify(alertsFixture()));
+        const count = writeJunit(alertsPath, outPath, { minRisk: "Medium" });
+        assert.equal(count, 3);
     });
 });

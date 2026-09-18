@@ -255,9 +255,9 @@ const SUBCOMMANDS: Subcommand[] = [
         name: "to-junit",
         help:
             "Convert zap-alerts.json to JUnit XML for CodeBuild's report view." +
-            " One testcase per (plugin, templated_path, method, param) tuple" +
-            " at risk ≥ --min-risk; complementary to `import` (which uploads to" +
-            " Security Hub).",
+            " One testcase per (plugin, host, templated_path, method, param)" +
+            " tuple at risk ≥ --min-risk; complementary to `import` (which" +
+            " uploads to Security Hub).",
         flags: [
             {
                 name: "--alerts",

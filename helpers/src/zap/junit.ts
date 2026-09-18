@@ -1,12 +1,14 @@
 /**
  * ZAP alerts JSON → JUnit XML.
  *
- * One <testcase> per unique (pluginId, templated_path, method, param)
- * tuple at risk ≥ threshold. Templated paths keep the report stable
- * across E2E runs — random per-run identifiers (order ids, catalog
- * ids) don't create a fresh finding each time. If the same finding
- * hits multiple raw URLs matching one template, they collapse into a
- * single <testcase> with a count in the failure body.
+ * One <testcase> per unique (pluginId, host, templated_path, method,
+ * param) tuple at risk ≥ threshold. Host is part of the key so a scan
+ * that spans multiple targets keeps them distinct (matching the ASFF
+ * findingId in asff.ts). Templated paths keep the report stable across
+ * E2E runs — random per-run identifiers (order ids, catalog ids) don't
+ * create a fresh finding each time. If the same finding hits multiple
+ * raw URLs matching one template, they collapse into a single
+ * <testcase> with a count in the failure body.
  *
  * Consumed by CodeBuild's JunitXml report format — findings show up
  * as failed test cases in the "reports" tab of every scheduled run.
@@ -48,19 +50,21 @@ interface ZapAlert {
     cweid?: string;
 }
 
+function stripControlChars(s: string): string {
+    // XML 1.0 forbids these ASCII control chars anywhere — including
+    // inside CDATA — so JUnit consumers reject a document that contains
+    // them. Tab/LF/CR are allowed and kept.
+    // biome-ignore lint/suspicious/noControlCharactersInRegex: intentional
+    return s.replace(/[\x00-\x08\x0B\x0C\x0E-\x1F]/g, "");
+}
+
 function xmlEscape(s: string): string {
-    return s
+    return stripControlChars(s)
         .replace(/&/g, "&amp;")
         .replace(/</g, "&lt;")
         .replace(/>/g, "&gt;")
         .replace(/"/g, "&quot;")
         .replace(/'/g, "&apos;");
-}
-
-function stripControlChars(s: string): string {
-    // JUnit consumers reject ASCII control chars other than tab/LF/CR.
-    // biome-ignore lint/suspicious/noControlCharactersInRegex: intentional
-    return s.replace(/[\x00-\x08\x0B\x0C\x0E-\x1F]/g, "");
 }
 
 interface Grouped {
@@ -213,7 +217,9 @@ export function writeJunit(
     opts: AlertsToJunitOpts = {},
 ): number {
     const payload = JSON.parse(readFileSync(alertsPath, "utf-8"));
-    const alerts: ZapAlert[] = payload.alerts || [];
+    const alerts: ZapAlert[] = Array.isArray(payload)
+        ? payload
+        : payload.alerts || [];
     const { xml, testcases } = alertsToJunit(alerts, opts);
     mkdirSync(dirname(outPath), { recursive: true });
     writeFileSync(outPath, xml);
