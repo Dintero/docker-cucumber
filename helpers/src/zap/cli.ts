@@ -7,9 +7,9 @@
  * of our stacks use).
  */
 
+import type { MinConfidence } from "./asff.ts";
 import * as client from "./client.ts";
 import { importFindings } from "./importer.ts";
-import type { MinConfidence } from "./asff.ts";
 
 interface Flag {
     name: string;
@@ -266,14 +266,18 @@ function printTopHelp(): void {
 }
 
 function printSubHelp(sub: Subcommand): void {
-    console.log(`usage: dintero-zap ${sub.name} [options]\n\n${sub.help}\n\nOptions:`);
+    console.log(
+        `usage: dintero-zap ${sub.name} [options]\n\n${sub.help}\n\nOptions:`,
+    );
     for (const f of sub.flags) {
         const parts: string[] = [];
         if (f.required) parts.push("(required)");
         if (f.default !== undefined) parts.push(`(default: ${f.default})`);
         if (f.choices) parts.push(`(choices: ${f.choices.join(", ")})`);
-        const suffix = parts.length ? " " + parts.join(" ") : "";
-        console.log(`  ${(f.name + (f.hasValue ? " <val>" : "")).padEnd(28)} ${f.help}${suffix}`);
+        const suffix = parts.length ? ` ${parts.join(" ")}` : "";
+        console.log(
+            `  ${(f.name + (f.hasValue ? " <val>" : "")).padEnd(28)} ${f.help}${suffix}`,
+        );
     }
 }
 
@@ -308,7 +312,9 @@ function parseFlags(sub: Subcommand, argv: string[]): Record<string, string> {
                 i++;
             } else {
                 if (i + 1 >= argv.length) {
-                    console.error(`dintero-zap ${sub.name}: ${name} requires a value`);
+                    console.error(
+                        `dintero-zap ${sub.name}: ${name} requires a value`,
+                    );
                     process.exit(2);
                 }
                 val = argv[i + 1];
@@ -329,14 +335,18 @@ function parseFlags(sub: Subcommand, argv: string[]): Record<string, string> {
 
     for (const f of sub.flags) {
         if (f.required && values[f.name] === undefined) {
-            console.error(`dintero-zap ${sub.name}: missing required option ${f.name}`);
+            console.error(
+                `dintero-zap ${sub.name}: missing required option ${f.name}`,
+            );
             process.exit(2);
         }
     }
     return values;
 }
 
-export async function main(argv: string[] = process.argv.slice(2)): Promise<void> {
+export async function main(
+    argv: string[] = process.argv.slice(2),
+): Promise<void> {
     if (argv.length === 0 || argv[0] === "-h" || argv[0] === "--help") {
         printTopHelp();
         process.exit(argv.length === 0 ? 2 : 0);

@@ -7,11 +7,10 @@
  * that has network reach to ZAP.
  */
 
-import { mkdirSync, writeFileSync, readFileSync } from "node:fs";
+import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 
-export const DEFAULT_ZAP_URL =
-    process.env.ZAP_URL || "http://zap-proxy:8080";
+export const DEFAULT_ZAP_URL = process.env.ZAP_URL || "http://zap-proxy:8080";
 
 async function getJson<T = unknown>(
     zapUrl: string,
@@ -77,10 +76,7 @@ export async function wait(zapUrl: string, timeoutS = 120): Promise<void> {
  * the E2E container (writes HAR) and the ZAP container (reads it) can
  * see.
  */
-export async function importHar(
-    zapUrl: string,
-    filePath: string,
-): Promise<unknown> {
+export function importHar(zapUrl: string, filePath: string): Promise<unknown> {
     const q = new URLSearchParams({ filePath }).toString();
     return getJson(zapUrl, `/JSON/exim/action/importHar/?${q}`);
 }
@@ -93,10 +89,9 @@ export async function drainPassive(
 ): Promise<void> {
     const deadline = Date.now() + timeoutS * 1000;
     while (Date.now() < deadline) {
-        const { recordsToScan } = await getJson<{ recordsToScan: string | number }>(
-            zapUrl,
-            "/JSON/pscan/view/recordsToScan/",
-        );
+        const { recordsToScan } = await getJson<{
+            recordsToScan: string | number;
+        }>(zapUrl, "/JSON/pscan/view/recordsToScan/");
         console.log(`[zap] passive queue: ${recordsToScan}`);
         if (String(recordsToScan) === "0") return;
         await sleep(pollIntervalS * 1000);
@@ -143,7 +138,10 @@ export async function activeScan(
 }
 
 /** Dump zap-alerts.json + zap-alerts-summary.json to `outDir`. */
-export async function dumpAlerts(zapUrl: string, outDir: string): Promise<void> {
+export async function dumpAlerts(
+    zapUrl: string,
+    outDir: string,
+): Promise<void> {
     mkdirSync(outDir, { recursive: true });
     for (const [name, path] of [
         ["zap-alerts.json", "/JSON/core/view/alerts/"],
