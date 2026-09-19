@@ -11,4 +11,40 @@ services:
     image: dintero/docker-cucumber
     volumes: [.:/usr/src/app/]
     depends_on: [httpstatus]
+    environment:
+      - HAR_OUT=/usr/src/app/.zap/example.har
     command: --require ./test_features.ts features
+
+  # ZAP daemon used by the `make test` scan pipeline. api.disablekey=true
+  # keeps the compose file secret-free — the daemon is only reachable on
+  # the compose network. Mixed api.addrs regex allows any-host access.
+  # The example dir is mounted so `import-har` can hand ZAP a filesystem
+  # path (its /JSON/exim/action/importHar endpoint reads server-side).
+  zap-proxy:
+    image: ghcr.io/zaproxy/zaproxy:stable
+    volumes: [.:/usr/src/app/]
+    command: >
+      zap.sh -daemon -host 0.0.0.0 -port 8080
+      -config api.disablekey=true
+      -config api.addrs.addr.name=".*"
+      -config api.addrs.addr.regex=true
+
+  # Runs the dintero-zap pipeline end-to-end against the HAR that the
+  # cucumber suite just produced, then emits a JUnit XML report. Reuses
+  # the docker-cucumber image because it already ships the dintero-zap
+  # CLI on PATH (see Dockerfile). --entrypoint /bin/sh flips it from the
+  # cucumber entrypoint to a shell so we can chain subcommands.
+  zap-scan:
+    image: dintero/docker-cucumber
+    entrypoint: /bin/sh
+    volumes: [.:/usr/src/app/]
+    depends_on: [zap-proxy, httpstatus]
+    command:
+      - -eu
+      - -c
+      - |
+        dintero-zap wait --zap http://zap-proxy:8080 --timeout 120
+        dintero-zap import-har --zap http://zap-proxy:8080 --file /usr/src/app/.zap/example.har
+        dintero-zap drain-passive --zap http://zap-proxy:8080 --timeout 120
+        dintero-zap dump --zap http://zap-proxy:8080 --out /usr/src/app/.zap
+        dintero-zap to-junit --alerts /usr/src/app/.zap/zap-alerts.json --out /usr/src/app/.zap/junit.xml --min-risk Low
