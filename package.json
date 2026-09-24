@@ -12,12 +12,12 @@
         "test": "node --import tsx --test helpers/src/**/*.test.ts"
     },
     "devDependencies": {
-        "@aws-sdk/client-lambda": "3.1130.0",
-        "@aws-sdk/client-s3": "3.1130.0",
-        "@aws-sdk/client-securityhub": "3.1130.0",
-        "@aws-sdk/client-sqs": "3.1130.0",
-        "@aws-sdk/client-ssm": "3.1130.0",
-        "@aws-sdk/client-sts": "3.1130.0",
+        "@aws-sdk/client-lambda": "3.1135.0",
+        "@aws-sdk/client-s3": "3.1135.0",
+        "@aws-sdk/client-securityhub": "3.1135.0",
+        "@aws-sdk/client-sqs": "3.1135.0",
+        "@aws-sdk/client-ssm": "3.1135.0",
+        "@aws-sdk/client-sts": "3.1135.0",
         "@biomejs/biome": "2.5.14",
         "@cucumber/cucumber": "13.2.1",
         "@types/js-yaml": "4.0.9",
