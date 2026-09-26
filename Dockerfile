@@ -1,11 +1,11 @@
 ARG DOCKER_REGISTRY=registry-1.docker.io
-FROM ${DOCKER_REGISTRY}/library/node:24.14.0-alpine3.22 AS builder
+FROM ${DOCKER_REGISTRY}/library/node:24.21.0-alpine3.24@sha256:ebfe2f90462722a7a4de65e91990e97fe0d401c70e0e762c5b53302f905ec1c1 AS builder
 WORKDIR /usr/src
 COPY package.json yarn.lock ./
 RUN --mount=type=cache,target=/root/yarn/.cache/yarn \
     yarn --silent install --frozen-lockfile --ignore-scripts
 
-FROM ${DOCKER_REGISTRY}/library/node:24.14.0-alpine3.22
+FROM ${DOCKER_REGISTRY}/library/node:24.21.0-alpine3.24@sha256:ebfe2f90462722a7a4de65e91990e97fe0d401c70e0e762c5b53302f905ec1c1
 WORKDIR /usr/src
 COPY --from=builder /usr/src/node_modules ./node_modules
 # Install dintero-e2e helpers (har-capture, ...) as a node package so
