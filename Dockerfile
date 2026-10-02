@@ -6,6 +6,7 @@ RUN --mount=type=cache,target=/root/yarn/.cache/yarn \
     yarn --silent install --frozen-lockfile --ignore-scripts
 
 FROM ${DOCKER_REGISTRY}/library/node:24.14.0-alpine3.22
+RUN apk upgrade --no-cache
 WORKDIR /usr/src
 COPY --from=builder /usr/src/node_modules ./node_modules
 # Install dintero-e2e helpers (har-capture, ...) as a node package so
