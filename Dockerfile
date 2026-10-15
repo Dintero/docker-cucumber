@@ -3,7 +3,12 @@ FROM ${DOCKER_REGISTRY}/library/node:24.21.0-alpine3.24@sha256:ebfe2f90462722a7a
 WORKDIR /usr/src
 COPY package.json yarn.lock ./
 RUN --mount=type=cache,target=/root/yarn/.cache/yarn \
-    yarn --silent install --frozen-lockfile --ignore-scripts
+    yarn --silent install --frozen-lockfile --ignore-scripts && \
+    rm -rf node_modules/@biomejs node_modules/.bin/biome && \
+    find node_modules -type f \( -name '*.map' -o -iname '*.md' -o -iname '*.markdown' \) -delete && \
+    find node_modules -mindepth 2 -type d \( -name test -o -name tests -o -name __tests__ \) -prune -exec rm -rf {} + && \
+    rm -rf node_modules/@aws-sdk/*/dist-es node_modules/@smithy/*/dist-es node_modules/@aws/*/dist-es \
+        node_modules/@aws-sdk/*/dist-types/ts3.4 node_modules/@smithy/*/dist-types/ts3.4
 
 FROM ${DOCKER_REGISTRY}/library/node:24.21.0-alpine3.24@sha256:ebfe2f90462722a7a4de65e91990e97fe0d401c70e0e762c5b53302f905ec1c1
 WORKDIR /usr/src
