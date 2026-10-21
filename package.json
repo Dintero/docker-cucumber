@@ -21,7 +21,7 @@
         "@aws-sdk/client-ssm": "3.1152.0",
         "@aws-sdk/client-sts": "3.1152.0",
         "@aws-sdk/lib-dynamodb": "3.1152.0",
-        "@cucumber/cucumber": "13.2.1",
+        "@cucumber/cucumber": "13.3.0",
         "@types/js-yaml": "4.0.9",
         "@types/lodash.ismatch": "4.4.9",
         "@types/lodash.ismatchwith": "4.4.9",
