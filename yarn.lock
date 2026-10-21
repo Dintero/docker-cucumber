@@ -758,10 +758,10 @@
   resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.17.27.tgz#15fb73275b64dbfe49e2ae8376bb469b352a47a7"
   integrity sha512-VenMRv/eKNrspX9v3H4dbmjsrnCOYdYBG3kxXKk3dG6X+urBGcj2Prww3xw1U5K4FV/mE4h5GbWd0szEKf+9ew==
 
-"@types/node@24.19.0":
-  version "24.19.0"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-24.19.0.tgz#becd0549e091f749520b8db8a446ec1559c88a0b"
-  integrity sha512-zY+5tKxXdhGh1PYI0ac+7juvEu4OI6vWtVVoj5i2m42jxAY1U+zHGt6QCyOFwykdP62sM3MJ9stoYYUw5aCWew==
+"@types/node@24.19.2":
+  version "24.19.2"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-24.19.2.tgz#8718eedbc0f89648de6525be9f4a9c61cdbaa502"
+  integrity sha512-93d49wCWJkCyN87MxLpNN6KXPCwFw7bVUg79mGUV1OS40JGWwVCr8n61DXCSqz7CV6/VfPkb7xec7uP2M+QHWQ==
   dependencies:
     undici-types ">=7.24.0 <7.24.7"
 
