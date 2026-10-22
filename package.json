@@ -25,7 +25,7 @@
         "@types/js-yaml": "4.0.9",
         "@types/lodash.ismatch": "4.4.9",
         "@types/lodash.ismatchwith": "4.4.9",
-        "@types/node": "24.19.0",
+        "@types/node": "24.19.2",
         "express": "5.3.0",
         "jose": "6.2.12",
         "js-yaml": "5.4.2",
