@@ -11,6 +11,7 @@ RUN --mount=type=cache,target=/root/yarn/.cache/yarn \
         node_modules/@aws-sdk/*/dist-types/ts3.4 node_modules/@smithy/*/dist-types/ts3.4
 
 FROM ${DOCKER_REGISTRY}/library/node:24.21.0-alpine3.24@sha256:ebfe2f90462722a7a4de65e91990e97fe0d401c70e0e762c5b53302f905ec1c1
+RUN apk upgrade --no-cache
 WORKDIR /usr/src
 COPY --from=builder /usr/src/node_modules ./node_modules
 # Install dintero-e2e helpers (har-capture, ...) as a node package so
